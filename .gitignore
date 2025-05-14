@@ -1,0 +1,28 @@
+# Log files
+*.log
+
+# Registry backups
+registry_backup/
+
+# Windows system files
+Thumbs.db
+desktop.ini
+
+# PowerShell generated files
+*.pssproj
+*.psess
+*.vsp
+*.vspx
+*.sap
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Temp files
+[Tt]emp/
+*.tmp
+*.bak 

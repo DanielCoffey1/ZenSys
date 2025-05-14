@@ -326,18 +326,6 @@ try {
     }
     $config = Get-Content -Path $configFile | ConvertFrom-Json
 
-    # Create restore point if enabled
-    if ($config.createRestorePoint) {
-        Write-Host "Creating system restore point..."
-        try {
-            Enable-ComputerRestore -Drive $env:SystemDrive
-            Checkpoint-Computer -Description "Windows Debloat Tool - Before Changes" -RestorePointType "MODIFY_SETTINGS"
-        }
-        catch {
-            Write-Host "Warning: Failed to create restore point. Error: $_"
-        }
-    }
-
     # Backup registry if enabled
     if ($config.backupRegistry) {
         Write-Host "Backing up registry keys..."
@@ -391,14 +379,6 @@ try {
     }
 
     try {
-        Write-Host "Configuring taskbar..."
-        Set-TaskbarSettings $config.taskbar
-    }
-    catch {
-        Write-Host "Error during taskbar configuration: $_"
-    }
-
-    try {
         Write-Host "Handling widgets..."
         Disable-Widgets $config.widgets
     }
@@ -406,14 +386,12 @@ try {
         Write-Host "Error during widget configuration: $_"
     }
 
-    Write-Host "`nWindows Debloat Tool completed!"
-    Write-Host "Note: Some changes may require a system restart to take effect."
-    Write-Host "`nPress any key to exit..."
-    $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+    # Signal completion without Explorer restart
+    Write-Host "`nMain operations completed successfully!"
+    exit 0
 }
 catch {
     Write-Host "`nCritical Error occurred: $_"
     Write-Host $_.ScriptStackTrace
-    Write-Host "`nPress any key to exit..."
-    $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
+    exit 1
 } 
