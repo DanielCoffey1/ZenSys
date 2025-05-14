@@ -1,0 +1,58 @@
+{
+  "createRestorePoint": true,
+  "backupRegistry": true,
+  "apps": {
+    "remove": [
+      "Microsoft.BingWeather",
+      "MicrosoftWindows.Client.WebExperience",
+      "Microsoft.Windows.SecHealthUI",
+      "Microsoft.ZuneMusic",
+      "Microsoft.ZuneVideo"
+    ],
+    "keep": [
+      "Microsoft.WindowsCalculator",
+      "Microsoft.WindowsStore",
+      "Microsoft.Windows.Photos",
+      "Microsoft.MicrosoftEdge.Stable",
+      "Microsoft.WindowsNotepad",
+      "Microsoft.ScreenSketch"
+    ]
+  },
+  "services": {
+    "disable": ["DiagTrack", "WpnService"]
+  },
+  "privacy": {
+    "disableTelemetry": true,
+    "disableActivityHistory": true,
+    "disableLocationTracking": true,
+    "disableAdvertisingID": true,
+    "disableWebSearch": true,
+    "disableCortana": true,
+    "disableErrorReporting": true,
+    "disableWindowsTips": true
+  },
+  "performance": {
+    "disableSuperfetch": true,
+    "disableIndexing": false,
+    "optimizeVisualEffects": true,
+    "disableWindowsDefender": false,
+    "disableOneDrive": true,
+    "disableWindowsSearch": false
+  },
+  "features": {
+    "removeOneDrive": true,
+    "removeXboxFeatures": true,
+    "removeTeams": true,
+    "removeCortana": true
+  },
+  "taskbar": {
+    "position": "left",
+    "alignLeft": true,
+    "hideTaskView": true,
+    "searchIcon": "hide",
+    "hideSearch": true
+  },
+  "widgets": {
+    "disable": true
+  }
+}
