@@ -1,6 +1,7 @@
 {
   "createRestorePoint": true,
   "backupRegistry": true,
+  "installRecommendedSoftware": true,
   "apps": {
     "remove": [
       "Microsoft.BingWeather",

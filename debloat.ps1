@@ -74,6 +74,50 @@ function Backup-RegistryKeys {
     }
 }
 
+function Install-RecommendedSoftware {
+    Write-Log "Installing recommended software using winget..."
+    
+    # Check if winget is available
+    try {
+        $wingetVersion = winget --version
+        Write-Log "Winget version: $wingetVersion"
+    }
+    catch {
+        Write-Log "Error: Winget is not installed. Please install App Installer from the Microsoft Store."
+        return
+    }
+    
+    # List of recommended software to install
+    $software = @(
+        @{
+            Name = "LibreWolf"
+            Id = "LibreWolf.LibreWolf"
+            Description = "Privacy-focused browser"
+        },
+        @{
+            Name = "Revo Uninstaller"
+            Id = "RevoUninstaller.RevoUninstaller"
+            Description = "Advanced software removal tool"
+        }
+    )
+    
+    foreach ($app in $software) {
+        Write-Log "Installing $($app.Name) ($($app.Description))..."
+        try {
+            $result = winget install --id $app.Id --accept-source-agreements --accept-package-agreements --silent
+            if ($LASTEXITCODE -eq 0) {
+                Write-Log "$($app.Name) installed successfully"
+            }
+            else {
+                Write-Log "Warning: $($app.Name) installation may have failed (Exit code: $LASTEXITCODE)"
+            }
+        }
+        catch {
+            Write-Log "Error installing $($app.Name): $_"
+        }
+    }
+}
+
 function Remove-BloatwareApps {
     param($apps)
     
@@ -325,6 +369,17 @@ try {
         exit 1
     }
     $config = Get-Content -Path $configFile | ConvertFrom-Json
+
+    # Install recommended software if enabled
+    if ($config.installRecommendedSoftware) {
+        try {
+            Write-Host "Installing recommended software..."
+            Install-RecommendedSoftware
+        }
+        catch {
+            Write-Host "Error during software installation: $_"
+        }
+    }
 
     # Backup registry if enabled
     if ($config.backupRegistry) {
